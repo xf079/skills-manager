@@ -16,7 +16,152 @@ body {
   min-height: 100vh;
 }
 
-.app-shell {
+button,
+input {
+  font: inherit;
+}
+
+button {
+  border: 1px solid #c9c9c1;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #242420;
+}
+
+.manager-shell {
+  display: grid;
+  grid-template-columns: 260px minmax(420px, 1fr) 360px;
   min-height: 100vh;
-  padding: 32px;
+  background: #f7f7f5;
+}
+
+.sidebar,
+.details-pane {
+  border-right: 1px solid #deded8;
+  background: #efefeb;
+  padding: 16px;
+}
+
+.details-pane {
+  border-left: 1px solid #deded8;
+  border-right: 0;
+  background: #fbfbf8;
+}
+
+.sidebar-section {
+  margin-bottom: 22px;
+}
+
+.section-label {
+  margin-bottom: 8px;
+  color: #696960;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.workspace-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid #d4d4cc;
+  border-radius: 6px;
+  background: #ffffff;
+  font-size: 13px;
+}
+
+.sidebar-item {
+  display: block;
+  width: 100%;
+  margin-bottom: 4px;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #282824;
+  text-align: left;
+}
+
+.sidebar-item.active,
+.sidebar-item:hover {
+  background: #ffffff;
+}
+
+.table-pane {
+  min-width: 0;
+  padding: 18px;
+}
+
+.pane-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.pane-header h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.pane-header p {
+  margin: 4px 0 0;
+  color: #696960;
+  font-size: 13px;
+}
+
+.search-input {
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border: 1px solid #d4d4cc;
+  border-radius: 6px;
+  background: #ffffff;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border: 1px solid #deded8;
+}
+
+th,
+td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #edede7;
+  font-size: 13px;
+  text-align: left;
+}
+
+th {
+  color: #696960;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+tr.selected {
+  background: #e8f0ec;
+}
+
+.details-stack {
+  display: grid;
+  gap: 18px;
+}
+
+code {
+  display: block;
+  overflow-wrap: anywhere;
+  padding: 10px;
+  border-radius: 6px;
+  background: #eeeeea;
+  font-size: 12px;
+}
+
+.action-row {
+  display: flex;
+  gap: 8px;
 }
