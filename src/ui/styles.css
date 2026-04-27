@@ -176,3 +176,36 @@ code {
 .confirm-box p {
   margin: 6px 0 10px;
 }
+
+@media (max-width: 760px) {
+  .manager-shell {
+    display: block;
+  }
+
+  .sidebar,
+  .details-pane,
+  .table-pane {
+    width: 100%;
+    padding: 16px;
+  }
+
+  .sidebar,
+  .details-pane {
+    border-right: 0;
+    border-left: 0;
+    border-bottom: 1px solid #deded8;
+  }
+
+  .pane-header {
+    align-items: flex-start;
+  }
+
+  table {
+    table-layout: fixed;
+  }
+
+  th,
+  td {
+    overflow-wrap: anywhere;
+  }
+}
