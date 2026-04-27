@@ -165,3 +165,14 @@ code {
   display: flex;
   gap: 8px;
 }
+
+.confirm-box {
+  padding: 12px;
+  border: 1px solid #d8b65c;
+  border-radius: 6px;
+  background: #fff8df;
+}
+
+.confirm-box p {
+  margin: 6px 0 10px;
+}

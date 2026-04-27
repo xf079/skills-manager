@@ -1,6 +1,10 @@
+import { useState } from "react";
 import type { Capability } from "@/shared/capability";
+import { ActionToolbar } from "./ActionToolbar";
 
 export function CapabilityDetails({ capability }: { capability?: Capability }) {
+  const [confirmingDelete, setConfirmingDelete] = useState(false);
+
   return (
     <aside className="details-pane">
       <div className="pane-header">
@@ -22,11 +26,19 @@ export function CapabilityDetails({ capability }: { capability?: Capability }) {
             <div className="section-label">Description</div>
             <p>{capability.description}</p>
           </div>
-          <div className="action-row">
-            <button type="button">Edit</button>
-            <button type="button">Copy</button>
-            <button type="button">Delete</button>
-          </div>
+          <ActionToolbar onDelete={() => setConfirmingDelete(true)} />
+          {confirmingDelete ? (
+            <div className="confirm-box">
+              <strong>Move capability to app trash?</strong>
+              <p>This does not permanently delete files.</p>
+              <div className="action-row">
+                <button type="button">Move to trash</button>
+                <button type="button" onClick={() => setConfirmingDelete(false)}>
+                  Cancel
+                </button>
+              </div>
+            </div>
+          ) : null}
         </div>
       )}
     </aside>
