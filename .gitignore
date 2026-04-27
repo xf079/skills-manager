@@ -6,6 +6,9 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
+# Superpowers local brainstorming sessions
+.superpowers/
+
 # database
 *.sqlite
 
