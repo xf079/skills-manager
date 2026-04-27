@@ -1,5 +1,6 @@
 import path from "node:path";
 import type { Capability } from "@/shared/capability";
+import { capabilityId } from "@/shared/capability";
 import type { OperationPlan } from "@/shared/operations";
 import type {
   CreateCapabilityInput,
@@ -7,6 +8,14 @@ import type {
   Provider,
   ProviderLocation,
 } from "@/shared/provider";
+import { listDirectories, readTextIfExists } from "@/native/file-tree";
+
+function extractDescription(markdown: string) {
+  return markdown
+    .split(/\r?\n/u)
+    .map((line) => line.trim())
+    .find((line) => line.length > 0 && !line.startsWith("#"));
+}
 
 export function workspaceLocation(
   provider: ProviderLocation["provider"],
@@ -46,7 +55,12 @@ export function createProvider(input: {
   supportedTypes: string[];
   globalRelativePaths: string[];
   workspaceRelativePaths: Array<{ path: string; label: string }>;
+  entryFile?: string;
+  defaultType?: string;
 }): Provider {
+  const entryFile = input.entryFile ?? "SKILL.md";
+  const defaultType = input.defaultType ?? input.supportedTypes[0];
+
   return {
     id: input.id,
     label: input.label,
@@ -64,8 +78,45 @@ export function createProvider(input: {
         workspaceLocation(input.id, workspacePath, entry.path, entry.label),
       );
     },
-    async scan() {
-      return [];
+    async scan(location) {
+      const directories = await listDirectories(location.rootPath);
+      const scannedAt = new Date().toISOString();
+      const capabilities: Capability[] = [];
+
+      for (const directory of directories) {
+        const entryPath = path.join(directory, entryFile);
+        const markdown = await readTextIfExists(entryPath);
+        if (!markdown) {
+          continue;
+        }
+
+        const name = path.basename(directory);
+        capabilities.push({
+          id: capabilityId({
+            provider: input.id,
+            scope: location.scope,
+            workspacePath: location.workspacePath,
+            entryPath,
+          }),
+          name,
+          provider: input.id,
+          type: defaultType,
+          scope: location.scope,
+          workspacePath: location.workspacePath,
+          rootPath: directory,
+          entryPath,
+          enabled: !name.endsWith(".disabled"),
+          status: name.endsWith(".disabled") ? "disabled" : "valid",
+          sourceKind: "installed",
+          description: extractDescription(markdown),
+          tags: [],
+          lastScannedAt: scannedAt,
+          validationMessages: [],
+          providerMetadata: {},
+        });
+      }
+
+      return capabilities;
     },
     async validate(capability: Capability) {
       return capability;
