@@ -12,5 +12,17 @@ export default defineConfig({
     url: "http://127.0.0.1:5173",
     reuseExistingServer: true,
   },
-  projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
+  projects: [
+    {
+      name: "chromium",
+      use: {
+        ...devices["Desktop Chrome"],
+        launchOptions: {
+          executablePath:
+            process.env.PLAYWRIGHT_CHROME_EXECUTABLE ??
+            "C:/Program Files/Google/Chrome/Application/chrome.exe",
+        },
+      },
+    },
+  ],
 });

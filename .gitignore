@@ -65,6 +65,10 @@ typings/
 # Optional npm cache directory
 .npm
 
+# Playwright artifacts
+test-results/
+playwright-report/
+
 # Optional eslint cache
 .eslintcache
 
