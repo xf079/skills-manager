@@ -3,10 +3,22 @@ import { WorkspaceSwitcher } from "./WorkspaceSwitcher";
 const providers = ["Codex", "Claude Code", "Gemini CLI", "Cursor", "Windsurf"];
 const statuses = ["Needs Review", "Invalid", "Update Available", "Disabled"];
 
-export function ProviderSidebar() {
+export function ProviderSidebar({
+  workspacePath,
+  onChooseWorkspace,
+  onClearWorkspace,
+}: {
+  workspacePath?: string;
+  onChooseWorkspace(): void;
+  onClearWorkspace(): void;
+}) {
   return (
     <aside className="sidebar">
-      <WorkspaceSwitcher />
+      <WorkspaceSwitcher
+        workspacePath={workspacePath}
+        onChoose={onChooseWorkspace}
+        onClear={onClearWorkspace}
+      />
       <section className="sidebar-section">
         <div className="section-label">Providers</div>
         {providers.map((provider) => (
@@ -20,6 +32,11 @@ export function ProviderSidebar() {
         <button className="sidebar-item active" type="button">
           Global
         </button>
+        {workspacePath ? (
+          <button className="sidebar-item" type="button">
+            Workspace scope
+          </button>
+        ) : null}
       </section>
       <section className="sidebar-section">
         <div className="section-label">Status</div>
