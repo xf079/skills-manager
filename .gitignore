@@ -9,6 +9,9 @@ lerna-debug.log*
 # Superpowers local brainstorming sessions
 .superpowers/
 
+# Local implementation worktrees
+.worktrees/
+
 # database
 *.sqlite
 
