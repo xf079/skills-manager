@@ -1,16 +1,22 @@
-import { fileURLToPath, URL } from "node:url";
-import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
+import path from "path";
+import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), tailwindcss()],
+  root: "src/mainview",
+  build: {
+    outDir: "../../dist",
+    emptyOutDir: true,
+  },
   resolve: {
     alias: {
-      "@": fileURLToPath(new URL("./src", import.meta.url)),
+      "@": path.resolve(__dirname, "./src/mainview"),
     },
   },
   server: {
     port: 5173,
-    strictPort: false,
+    strictPort: true,
   },
 });
